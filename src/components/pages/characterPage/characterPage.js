@@ -5,6 +5,11 @@ import Field from '../../field/field.js';
 import GotService from '../../../services/gotService.js';
 import ErrorMessage from '../../errorMessage/errorMessge.js';
 import RowBlock from '../../rowBlock/rowBlock.js';
+import WithData from '../../hocs/withData.js';
+
+const {getAllCharacters, getCharacter} = new GotService();
+
+const WrappedCharacterList = WithData(ItemList, getAllCharacters);
 
 class CharacterPage extends Component {
 
@@ -12,8 +17,6 @@ class CharacterPage extends Component {
     selectedChar: 130,
     error: false
   }
-
-  gotService = new GotService();
 
   componentDidCatch() {
     this.setState({error: true})
@@ -29,9 +32,8 @@ class CharacterPage extends Component {
     }
 
     const itemList = (
-      <ItemList
+      <WrappedCharacterList
         onItemSelected={this.onItemSelected}
-        getData={this.gotService.getAllCharacters}
         renderItem={({name, gender}) => `${name} (${gender})`}
       />
     );
@@ -39,7 +41,7 @@ class CharacterPage extends Component {
     const charDetails = (
       <ItemDetails
         itemID={this.state.selectedChar}
-        getData={this.gotService.getCharacter}
+        getData={getCharacter}
       >
         <Field 
           field='gender' 

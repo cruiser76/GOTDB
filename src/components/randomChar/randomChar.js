@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import PropTypes from 'prop-types';
 import GotService from './../../services/gotService.js';
 import Spinner from '../spinner/spinner.js';
 import ErrorMessage from '../errorMessage/errorMessge.js';
@@ -8,7 +9,7 @@ export default class RandomChar extends Component {
 
     componentDidMount() {
         this.updateChar();
-        this.timerID = setInterval(this.updateChar, 4000);
+        this.timerID = setInterval(this.updateChar, this.props.interval);
     }
 
     componentWillUnmount() {
@@ -81,3 +82,11 @@ const View = ({char}) => {
         </Fragment>
     )
 }
+
+RandomChar.defaultProps = {
+    interval: 15000
+};
+
+RandomChar.propTypes = {
+    interval: PropTypes.number.isRequired
+};

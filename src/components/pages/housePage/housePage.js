@@ -5,6 +5,11 @@ import Field from '../../field/field.js';
 import GotService from '../../../services/gotService.js';
 import ErrorMessage from '../../errorMessage/errorMessge.js';
 import RowBlock from '../../rowBlock/rowBlock.js';
+import WithData from '../../hocs/withData.js';
+
+const {getAllHouses, getHouse} = new GotService();
+
+const WrappedHouseList = WithData(ItemList, getAllHouses);
 
 class HousePage extends Component {
 
@@ -12,8 +17,6 @@ class HousePage extends Component {
     selectedHouse: 10,
     error: false
   }
-
-  gotService = new GotService();
 
   componentDidCatch() {
     this.setState({error: true})
@@ -29,9 +32,8 @@ class HousePage extends Component {
     }
 
     const itemList = (
-      <ItemList
+      <WrappedHouseList
         onItemSelected={this.onItemSelected}
-        getData={this.gotService.getAllHouses}
         renderItem={({name}) => `${name}`}
       />
     );
@@ -39,7 +41,7 @@ class HousePage extends Component {
     const houseDetails = (
       <ItemDetails
         itemID={this.state.selectedHouse}
-        getData={this.gotService.getHouse}
+        getData={getHouse}
       >
         <Field
           field='region'
