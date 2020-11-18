@@ -7,7 +7,6 @@ import ErrorMessage from '../errorMessage/errorMessge.js';
 import CharacterPage from '../pages/characterPage/characterPage.js';
 import BookPage from '../pages/bookPage/bookPage.js';
 import HousePage from '../pages/housePage/housePage.js';
-import GotService from './../../services/gotService.js';
 import BooksItem from '../pages/booksItem/booksItem.js';
 import CharacterItem from '../pages/characterItem/characterItem.js';
 
@@ -19,8 +18,6 @@ class App extends Component {
         isRandomCharShow: true,
         error: false
     }
-
-    got = new GotService();
 
     componentDidCatch() {
         this.setState({error: true})
@@ -61,7 +58,8 @@ class App extends Component {
                         </Row>
                         <Route 
                             exact
-                            path='/' component={() => <h1 style={{color: 'cyan'}}>Welcome to GOT DB</h1>}
+                            path='/' 
+                            component={() => <h1 style={{color: 'cyan'}}>Welcome to GOT DB</h1>}
                         />
                         <Route
                             exact

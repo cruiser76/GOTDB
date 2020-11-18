@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import ActionCreator from '../../../reducer/actions.js';
+
 import ItemList from '../../itemList';
 import ItemDetails from '../../itemDetails';
 import Field from '../../field/field.js';
@@ -7,14 +11,12 @@ import ErrorMessage from '../../errorMessage/errorMessge.js';
 import RowBlock from '../../rowBlock/rowBlock.js';
 import WithData from '../../hocs/withData.js';
 
-const {getAllHouses, getHouse} = new GotService();
+const {getAllHouses} = new GotService();
 
 const WrappedHouseList = WithData(ItemList, getAllHouses);
 
 class HousePage extends Component {
-
   state = {
-    selectedHouse: 10,
     error: false
   }
 
@@ -23,7 +25,8 @@ class HousePage extends Component {
   }
 
   onItemSelected = (id) => {
-    this.setState({selectedHouse: id});
+    // this.props.setItemID(id);
+    this.props.loadItem(id, 'getHouse');
   }
 
   render() {
@@ -39,10 +42,7 @@ class HousePage extends Component {
     );
 
     const houseDetails = (
-      <ItemDetails
-        itemID={this.state.selectedHouse}
-        getData={getHouse}
-      >
+      <ItemDetails>
         <Field
           field='region'
           label='Region'
@@ -75,4 +75,17 @@ class HousePage extends Component {
   }
 }
 
-export default HousePage;
+const mapStateToProps = ({itemID}) => {
+  return {
+    selectedHouse: itemID,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  const {loadItem} = bindActionCreators(ActionCreator, dispatch);
+  return {
+    loadItem: (id, method) => loadItem(id, method),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HousePage);

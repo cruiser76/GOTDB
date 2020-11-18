@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import ActionCreator from '../../reducer/actions.js';
 
 const HeaderBlock = styled.div`
     display: flex;
@@ -27,27 +30,43 @@ const HeaderLinks = styled.ul`
     }
 `;
 
-const Header = () => {
+const Header = (props) => {
     return (
         <HeaderBlock>
             <HeaderTitle>
                 <Link to="/">
-                Game of Thrones DB
+                    Game of Thrones DB
                 </Link>
             </HeaderTitle>
             <HeaderLinks>
                 <li>
-                    <Link to="/characters/">Characters</Link>
+                    <Link
+                        to="/characters/"
+                        onClick={() => props.setItem(null)}
+                    >Characters</Link>
                 </li>
                 <li>
-                    <Link to="/houses/">Houses</Link>
+                    <Link
+                        to="/houses/"
+                        onClick={() => props.setItem(null)}
+                    >Houses</Link>
                 </li>
                 <li>
-                    <Link to="/books/">Books</Link>   
+                    <Link
+                        to="/books/"
+                        onClick={() => props.setItem(null)}
+                    >Books</Link>
                 </li>
             </HeaderLinks>
         </HeaderBlock>
     );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => {
+    const {setItem} = bindActionCreators(ActionCreator, dispatch);
+    return {
+        setItem: (item) => setItem(item),
+    };
+}
+
+export default connect(() => ({}), mapDispatchToProps)(Header);

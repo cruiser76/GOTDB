@@ -14,7 +14,7 @@ const WrappedCharacterList = WithData(ItemList, getAllCharacters);
 class CharacterPage extends Component {
 
   state = {
-    selectedChar: 130,
+    selectedChar: '',
     error: false
   }
 
