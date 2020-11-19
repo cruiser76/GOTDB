@@ -31,6 +31,10 @@ const HeaderLinks = styled.ul`
 `;
 
 const Header = (props) => {
+    const onLinkClick = () => {
+        props.setItem(null);
+    };
+
     return (
         <HeaderBlock>
             <HeaderTitle>
@@ -42,19 +46,19 @@ const Header = (props) => {
                 <li>
                     <Link
                         to="/characters/"
-                        onClick={() => props.setItem(null)}
+                        onClick={onLinkClick}
                     >Characters</Link>
                 </li>
                 <li>
                     <Link
                         to="/houses/"
-                        onClick={() => props.setItem(null)}
+                        onClick={onLinkClick}
                     >Houses</Link>
                 </li>
                 <li>
                     <Link
                         to="/books/"
-                        onClick={() => props.setItem(null)}
+                        onClick={onLinkClick}
                     >Books</Link>
                 </li>
             </HeaderLinks>

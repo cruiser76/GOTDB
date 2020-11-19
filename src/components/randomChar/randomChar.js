@@ -1,11 +1,13 @@
 import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import ActionCreator from '../../reducer/actions.js';
+
 import PropTypes from 'prop-types';
-import GotService from './../../services/gotService.js';
 import Spinner from '../spinner/spinner.js';
-import ErrorMessage from '../errorMessage/errorMessge.js';
 import './randomChar.css';
 
-export default class RandomChar extends Component {
+class RandomChar extends Component {
 
     componentDidMount() {
         this.updateChar();
@@ -17,37 +19,16 @@ export default class RandomChar extends Component {
         this.setState = () => {};
     }
 
-    gotService = new GotService();
-
-    state = {
-        char: {},
-        loading: true,
-        error: false
-    }
-
     updateChar = () => {
         const id = Math.floor(Math.random() * 140 + 25);
-        this.gotService.getCharacter(id)
-            .then(this.onCharLoaded)
-            .catch(this.onError);
-    }
-
-    onError = () => {
-        this.setState({error: true});
-    }
-
-    onCharLoaded = (char) => {
-        this.setState({char, loading: false});
+        this.props.loadRandomChar(id)
     }
 
     render() {
-        const {char, loading, error} = this.state;
+        const {randomChar} = this.props;
         
-        let content = loading ? <Spinner /> : <View char={char} />
-        if (error) {
-            content = <ErrorMessage />;
-        }
-
+        let content = !randomChar ? <Spinner /> : <View char={randomChar} />
+       
         return (
             <div className="random-block rounded">
                 {content}
@@ -90,3 +71,18 @@ RandomChar.defaultProps = {
 RandomChar.propTypes = {
     interval: PropTypes.number.isRequired
 };
+
+const mapStateToProps = ({randomChar}) => {
+    return {
+        randomChar
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    const {loadRandomChar} = bindActionCreators(ActionCreator, dispatch);
+    return {
+        loadRandomChar: (id) => loadRandomChar(id),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RandomChar);

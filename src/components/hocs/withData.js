@@ -1,29 +1,42 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import ActionCreator from '../../reducer/actions.js';
+
 import Spinner from '../spinner/spinner.js';
 
 const withData = (View, getData) => {
 
-  return class extends Component {
+    class DataItem extends Component {
+        componentDidMount() {
+            this.props.loadData(getData);
+        }
 
-      state = {
-          data: null
-      }
+        render() {
+            const {data} = this.props;
 
-      componentDidMount() {
-          getData()
-              .then((data) => this.setState({data}));
-      }
+            if (!data) {
+                return <Spinner />
+            }
 
-      render() {
-          const {data} = this.state;
+            return <View {...this.props} />
+        }
+    }
 
-          if (!data) {
-              return <Spinner />
-          }
+    const mapStateToProps = ({dataList}) => {
+        return {
+            data: dataList
+        }
+    };
+    
+    const mapDispatchToProps = (dispatch) => {
+        const {loadData} = bindActionCreators(ActionCreator, dispatch);
+        return {
+            loadData: (method) => loadData(method),
+        };
+    };
 
-          return <View {...this.props} data={data} />
-      }
-  }
+    return connect(mapStateToProps, mapDispatchToProps)(DataItem)
 };
 
 export default withData;

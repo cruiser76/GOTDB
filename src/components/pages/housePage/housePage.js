@@ -6,14 +6,11 @@ import ActionCreator from '../../../reducer/actions.js';
 import ItemList from '../../itemList';
 import ItemDetails from '../../itemDetails';
 import Field from '../../field/field.js';
-import GotService from '../../../services/gotService.js';
 import ErrorMessage from '../../errorMessage/errorMessge.js';
 import RowBlock from '../../rowBlock/rowBlock.js';
 import WithData from '../../hocs/withData.js';
 
-const {getAllHouses} = new GotService();
-
-const WrappedHouseList = WithData(ItemList, getAllHouses);
+const WrappedHouseList = WithData(ItemList, 'getAllHouses');
 
 class HousePage extends Component {
   state = {
@@ -25,7 +22,6 @@ class HousePage extends Component {
   }
 
   onItemSelected = (id) => {
-    // this.props.setItemID(id);
     this.props.loadItem(id, 'getHouse');
   }
 
@@ -75,12 +71,6 @@ class HousePage extends Component {
   }
 }
 
-const mapStateToProps = ({itemID}) => {
-  return {
-    selectedHouse: itemID,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   const {loadItem} = bindActionCreators(ActionCreator, dispatch);
   return {
@@ -88,4 +78,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HousePage);
+export default connect(() => ({}), mapDispatchToProps)(HousePage);

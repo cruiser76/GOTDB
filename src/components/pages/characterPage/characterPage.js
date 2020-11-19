@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import ActionCreator from '../../../reducer/actions.js';
+
 import ItemList from '../../itemList';
 import ItemDetails from '../../itemDetails';
 import Field from '../../field/field.js';
-import GotService from '../../../services/gotService.js';
 import ErrorMessage from '../../errorMessage/errorMessge.js';
 import RowBlock from '../../rowBlock/rowBlock.js';
 import WithData from '../../hocs/withData.js';
 
-const {getAllCharacters, getCharacter} = new GotService();
-
-const WrappedCharacterList = WithData(ItemList, getAllCharacters);
+const WrappedCharacterList = WithData(ItemList, 'getAllCharacters');
 
 class CharacterPage extends Component {
 
   state = {
-    selectedChar: '',
     error: false
   }
 
@@ -23,7 +23,7 @@ class CharacterPage extends Component {
   }
 
   onItemSelected = (id) => {
-    this.setState({selectedChar: id});
+    this.props.loadItem(id, 'getCharacter');
   }
 
   render() {
@@ -39,10 +39,7 @@ class CharacterPage extends Component {
     );
 
     const charDetails = (
-      <ItemDetails
-        itemID={this.state.selectedChar}
-        getData={getCharacter}
-      >
+      <ItemDetails>
         <Field 
           field='gender' 
           label='Gender'
@@ -71,4 +68,11 @@ class CharacterPage extends Component {
   }
 }
 
-export default CharacterPage;
+const mapDispatchToProps = (dispatch) => {
+  const {loadItem} = bindActionCreators(ActionCreator, dispatch);
+  return {
+    loadItem: (id, method) => loadItem(id, method),
+  };
+}
+
+export default connect(() => ({}), mapDispatchToProps)(CharacterPage);
