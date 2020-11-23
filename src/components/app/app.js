@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {Col, Row, Container, Button} from 'reactstrap';
+import {connect} from 'react-redux';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage/errorMessge.js';
@@ -104,4 +105,10 @@ class App extends Component {
 
 };
 
-export default App;
+const mapStateToProps = ({item}) => {
+    return {
+        item,
+    };
+};
+
+export default connect(mapStateToProps)(App);

@@ -1,9 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import ActionCreator from '../../reducer/actions.js';
 import './itemDetails.css';
 
 const ItemDetails = (props) => {
     if (!props.item) {
+        if (props.bookID) {
+            props.loadItem(props.bookID, 'getBook');
+        }
         return <span style={{color: 'white'}}>Select a item</span>
     }
 
@@ -29,4 +34,11 @@ const mapStateToProps = ({item}) => {
     };
 };
 
-export default connect(mapStateToProps)(ItemDetails);
+const mapDispatchToProps = (dispatch) => {
+    const {loadItem} = bindActionCreators(ActionCreator, dispatch);
+    return {
+      loadItem: (id, method) => loadItem(id, method),
+    };
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemDetails);
