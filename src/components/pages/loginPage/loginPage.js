@@ -31,7 +31,7 @@ const LoginForm = (props) => {
           name="password"
           id="login-password"
           className="form-control"
-          placeholder="enter login"
+          placeholder="enter password"
           validate={[requiredField, minLength8]}
         />
       </FormGroup>
