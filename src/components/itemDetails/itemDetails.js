@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ActionCreator from '../../reducer/actions.js';
+import ActionCreator from '../../reducer/data/actions.js';
 import './itemDetails.css';
 
 const ItemDetails = (props) => {
@@ -28,7 +28,7 @@ const ItemDetails = (props) => {
     );
 }
 
-const mapStateToProps = ({item}) => {
+const mapStateToProps = ({data: {item}}) => {
     return {
         item,
     };

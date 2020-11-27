@@ -1,0 +1,43 @@
+.field {
+  position: relative;
+
+  input {
+    &:focus {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  span {
+    display: none;
+    color: red;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 40px;
+
+    &::after {
+      position: absolute;
+      content: '!';
+      color: white;
+      font-weight: bold;
+      background: red;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      text-align: center;
+      right: -30px;
+      top: 3px;
+    }
+  }
+
+  &--error {
+    input {
+      border: 1px solid red;
+    }
+
+    span {
+      display: block;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ActionCreator from '../../reducer/actions.js';
+import ActionCreator from '../../reducer/data/actions.js';
 
 import PropTypes from 'prop-types';
 import Spinner from '../spinner/spinner.js';
@@ -72,7 +72,7 @@ RandomChar.propTypes = {
     interval: PropTypes.number.isRequired
 };
 
-const mapStateToProps = ({randomChar}) => {
+const mapStateToProps = ({data: {randomChar}}) => {
     return {
         randomChar
     }

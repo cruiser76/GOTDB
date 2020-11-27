@@ -8,6 +8,7 @@ import ErrorMessage from '../errorMessage/errorMessge.js';
 import CharacterPage from '../pages/characterPage/characterPage.js';
 import BookPage from '../pages/bookPage/bookPage.js';
 import HousePage from '../pages/housePage/housePage.js';
+import LoginPage from '../pages/loginPage/loginPage.js';
 import BooksItem from '../pages/booksItem/booksItem.js';
 import CharacterItem from '../pages/characterItem/characterItem.js';
 
@@ -97,6 +98,11 @@ class App extends Component {
                                 />}
                             }
                         />
+                         <Route
+                            exact
+                            path='/login'
+                            component={LoginPage}
+                        />
                     </Container>
                 </div>
             </Router>
@@ -105,7 +111,7 @@ class App extends Component {
 
 };
 
-const mapStateToProps = ({item}) => {
+const mapStateToProps = ({data: {item}}) => {
     return {
         item,
     };

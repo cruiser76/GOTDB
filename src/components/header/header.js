@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ActionCreator from '../../reducer/actions.js';
+import ActionCreator from '../../reducer/data/actions.js';
 
 const HeaderBlock = styled.div`
     display: flex;
@@ -60,6 +60,12 @@ const Header = (props) => {
                         to="/books/"
                         onClick={onLinkClick}
                     >Books</Link>
+                </li>
+                <li>
+                    <Link
+                        to="/login/"
+                        onClick={onLinkClick}
+                    >Log In</Link>
                 </li>
             </HeaderLinks>
         </HeaderBlock>

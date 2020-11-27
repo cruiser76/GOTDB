@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ActionCreator from '../../../reducer/actions.js';
+import ActionCreator from '../../../reducer/data/actions.js';
 
 import ItemList from '../../itemList';
 import ErrorMessage from '../../errorMessage/errorMessge.js';

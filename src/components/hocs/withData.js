@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ActionCreator from '../../reducer/actions.js';
+import ActionCreator from '../../reducer/data/actions.js';
 
 import Spinner from '../spinner/spinner.js';
 
@@ -23,7 +23,7 @@ const withData = (View, getData) => {
         }
     }
 
-    const mapStateToProps = ({dataList}) => {
+    const mapStateToProps = ({data: {dataList}}) => {
         return {
             data: dataList
         }
